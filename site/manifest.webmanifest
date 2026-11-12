@@ -1,0 +1,11 @@
+{
+  "name": "Studywell · CFA Level I",
+  "short_name": "Studywell",
+  "description": "Your CFA Level I study planner and progress tracker.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7f4",
+  "theme_color": "#f7f8f6",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
