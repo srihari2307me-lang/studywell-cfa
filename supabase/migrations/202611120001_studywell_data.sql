@@ -1,0 +1,25 @@
+create table if not exists public.studywell_data (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  payload jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.studywell_data enable row level security;
+revoke all on public.studywell_data from anon;
+grant select, insert, update on public.studywell_data to authenticated;
+
+drop policy if exists "read own study data" on public.studywell_data;
+create policy "read own study data"
+  on public.studywell_data for select to authenticated
+  using ((select auth.uid()) = user_id);
+
+drop policy if exists "insert own study data" on public.studywell_data;
+create policy "insert own study data"
+  on public.studywell_data for insert to authenticated
+  with check ((select auth.uid()) = user_id);
+
+drop policy if exists "update own study data" on public.studywell_data;
+create policy "update own study data"
+  on public.studywell_data for update to authenticated
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
